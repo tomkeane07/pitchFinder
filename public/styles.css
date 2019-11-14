@@ -1,0 +1,27 @@
+body{
+    font-family: Raleway;
+    color: #555;
+    background: #C5E3BF;
+    margin: 10px 30px;
+}
+
+
+
+li{
+    padding: 15px 0;
+    background: #eee;
+    list-style-type: none;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 10px 0;
+    border-radius: 4px;
+}
+
+span{
+    display: inline-block;
+    margin: 0 20px;
+}
+span.dist{
+    color: green;
+    float: right;
+}
