@@ -49,11 +49,12 @@
                         <div id="pitch-container">
                             <form id="search" onSubmit={this.handleSubmit}>
                                 <label>Enter your Latitude:</label>
-                                <input type="text" ref="lat" placeholder="latitude" required />
+                                <input id="inLat" type="text" ref="lat" placeholder="latitude" required />
                                 <label>Enter your Longitude:</label>
-                                <input type="text" ref="lng" placeholder="longitude" required />
+                                <input id="inLng" type="text" ref="lng" placeholder="longitude" required />
                                 <input type="submit" value="Find Pitches" />
                             </form>
+                            <button id="getLocation" onClick={this.getLocation}>get Location</button>
                             <ul>{pitches}</ul>
                        </div>
                     );
@@ -70,11 +71,33 @@
                         });
                         console.log(json);
                     });
+                },
+
+                getLocation: function(){
+                    navigator.geolocation.getCurrentPosition(success, error, options);
                 }
             });
 
 
             ReactDOM.render(<Pitches/>, document.getElementById('pitches'));
+
+            var options = {
+              enableHighAccuracy: true,
+              timeout: 5000,
+              maximumAge: 0
+            };
+
+            function success(pos) {
+              var crd = pos.coords;
+              inLat.value=crd.latitude;
+              inLng.value=crd.longitude;
+            }
+
+            function error(err) {
+              console.warn(`ERROR(${err.code}): ${err.message}`);
+            }
+
+            
 
 
         </script>
