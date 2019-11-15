@@ -1,10 +1,18 @@
 <!doctype html>
 <html class="no-js" lang="">
     <head>
-        <meta charset="utf-8">
+        <meta charset="utf-8"/>
         <title>pitchFinder</title>
-        <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-        <link href="/styles.css" rel="stylesheet" />        
+        <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet"/>
+        <link href="/styles.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+           integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+           crossorigin=""/>
+        <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+           integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+           crossorigin="">
+       </script>
+
     </head>
     <body>
 
@@ -12,6 +20,7 @@
         <div id="homepage">
             <h1>Find a football pitch in your area!</h1>
             <div id="pitches"></div>
+            <div id="map"></div>
         </div>
 
 
@@ -37,8 +46,8 @@
                         return(
                                 <li key={index}>
                                     <span className="name">{pitch.name}</span>
+                                    <span className="name">{pitch.phone}</span>
                                     <span className="dist">{Math.floor(pitch.dist.calculated/1000)} km</span>
-                                    {/*-- dis is a geonear property */}
 
                                 </li>
 
@@ -54,7 +63,7 @@
                                 <input id="inLng" type="text" ref="lng" placeholder="longitude" required />
                                 <input type="submit" value="Find Pitches" />
                             </form>
-                            <button id="getLocation" onClick={this.getLocation}>get Location</button>
+                            <button id="getLocation" onClick={this.getLocation}>provide your location</button>
                             <ul>{pitches}</ul>
                        </div>
                     );
@@ -63,6 +72,7 @@
                     e.preventDefault();
                     var lng = this.refs.lng.value;
                     var lat = this.refs.lat.value;
+                    mymap.setView([lat,lng],13)
                     fetch('/api/pitches?lng=' + lng + '&lat=' + lat).then(function(data){
                         return data.json();
                     }).then( json => {
@@ -99,9 +109,16 @@
 
             
 
+            var mymap = L.map('map').setView([53.3498, -6.2603], 10);
 
-        </script>
+            L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                maxZoom: 18,
+                id: 'mapbox.streets',
+                accessToken: 'pk.eyJ1IjoidG9ta2VhbmUwNyIsImEiOiJjazMwMDN1MjEwZHA0M29qd3Y0ZjFpNGx2In0.kZbdDU9R8BeKyDkMLctcbw'
+            }).addTo(mymap);
 
+          </script>
 
     </body>
 </html>
