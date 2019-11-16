@@ -26,4 +26,21 @@ span.dist{
     float: right;
 }
 
-#map{ width: 900px; height: 500px; }
+.rhs{
+	float:right;
+	border-left: 50px;
+}
+.map{
+	visibility: visible; 
+	width: 900px; 
+	height: 500px;
+}
+.map.hide {
+  visibility: hidden;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s
+}
+
+#pitches{
+	float:left;
+}

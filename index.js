@@ -13,6 +13,7 @@ mongoose.connect('mongodb://localhost/pitchFinder',{
 mongoose.Promise = global.Promise;
 
 app.use(express.static('public'));
+app.use(express.static('assets'));
 
 app.use(bP.json());
 
