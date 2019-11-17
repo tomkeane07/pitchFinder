@@ -25,9 +25,15 @@ span.dist{
     color: green;
     float: right;
 }
+
+.rhs{
+	float:right;
+	border-left: 50px;
+}
 .map{
-	visibility: visible;
-	height: 100%;
+	visibility: visible; 
+	width: 900px; 
+	height: 500px;
 }
 .map.hide {
   visibility: hidden;
@@ -37,19 +43,4 @@ span.dist{
 
 #pitches{
 	float:left;
-}
-
-
-.left {
-  position: absolute;
-  left: 0px;
-  width: 50%;
-  height:100%;
-}
-
-.right {
-  position: absolute;
-  right: 0px;
-  width: 50%;
-  height: 100%;
 }

@@ -21,15 +21,33 @@
     </head>
     <body>
 
-        <h1 class="title">PITCH FINDER - a REST API</h1>
+        <h1>PITCH FINDER - a REST API</h1>
         <div id="homepage">
-            <h1>Find a football pitch in your area!</h1>
-            <div id="pitches"></div>
-            <div class="rhs">
-            <button class="popup" onclick="toggleMap()">
-                Show/Hide Map
-            </button>
-            <div class = "map"id="map"></div>
+            <div class="left">
+                <h1>Find a football pitch in your area!</h1>
+                <div id="pitches"></div>
+            </div>
+
+
+            <div class="right">
+                    <button class="popup" onclick="toggleMap()">
+                        Show/Hide Map
+                    </button>
+                    <div class="map"id="map"></div>
+
+                    <div>add a pitch to our DB</div> 
+                    <form class="addPitch" onSubmit={this.AddPitch}>
+                        <label>pitch</label>
+                        <input name="name" type="text" ref="name" placeholder="name" required />
+                        <label>phone</label>
+                        <input name="phone" type="text" ref="phone" placeholder="phone"/>
+                        <label>Latitude:</label>
+                        <input name="inLat" type="text" ref="alat" placeholder="latitude" required />
+                        <label>Longitude:</label>
+                        <input name="inLng" type="text" ref="alng" placeholder="longitude" required />
+                        <input type="submit" value="Add Pitch" />
+                    </form>
+            </div>
         </div>
         
         

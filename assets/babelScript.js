@@ -9,6 +9,8 @@ var Pitches = React.createClass({
     render: function(){
         var pitches = this.state.pitches;
         pitches = pitches.map(function(pitch, index){
+            //console.log(pitch.geometry.coordinates);
+            var marker = L.marker(pitch.geometry.coordinates.reverse()).addTo(mymap);
             return(
                     <li key={index}>
                         <span className="name">{pitch.name}</span>
@@ -16,12 +18,11 @@ var Pitches = React.createClass({
                         <span className="dist">{Math.floor(pitch.dist.calculated/1000)} km</span>
 
                     </li>
-
                 );
         });
 
         return(
-            <div id="pitch-container">
+            <div id="pitch-container">     
                 <form id="search" onSubmit={this.handleSubmit}>
                     <label>Enter your Latitude:</label>
                     <input id="inLat" type="text" ref="lat" placeholder="latitude" required />
@@ -45,7 +46,7 @@ var Pitches = React.createClass({
             this.setState({
                 pitches: json
             });
-            console.log(json);
+            //console.log(json);
         });
     },
 
