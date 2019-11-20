@@ -35,7 +35,7 @@ var Pitches = React.createClass({
                </div>
                <div>
                     <h1>add a pitch to our DB</h1> 
-                    <form class="addPitch" onSubmit={this.AddPitch}>
+                    <form id="addPitch" class="addPitch" onSubmit={this.AddPitch}>
                         <label>pitch</label>
                         <input name="name" type="text" ref="name" placeholder="name" required />
                         <label>phone</label>
@@ -129,5 +129,22 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
     accessToken: 'pk.eyJ1IjoidG9ta2VhbmUwNyIsImEiOiJjazMwMDN1MjEwZHA0M29qd3Y0ZjFpNGx2In0.kZbdDU9R8BeKyDkMLctcbw'
 }).addTo(mymap);
 
+
+var searchControl = new L.esri.Controls.Geosearch().addTo(mymap);
+
+var results = new L.LayerGroup().addTo(mymap);
+
+searchControl.on('results', function(data){
+    results.clearLayers();
+    for (var i = data.results.length - 1; i >= 0; i--) {
+        let latlng = data.results[i].latlng;
+        results.addLayer(L.marker(latlng));
+        addPitch.inLat.value=latlng.lat;
+        addPitch.inLng.value=latlng.lng;
+        addPitch.name.value=data.results[i].name
+    }
+});
+
+setTimeout(function(){$('.pointer').fadeOut('slow');},3400);
 
 
