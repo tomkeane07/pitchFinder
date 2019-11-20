@@ -22,20 +22,36 @@ var Pitches = React.createClass({
         });
 
         return(
-            <div id="pitch-container">     
-                <form id="search" onSubmit={this.handleSubmit}>
-                    <label>Enter your Latitude:</label>
-                    <input id="inLat" type="text" ref="lat" placeholder="latitude" required />
-                    <label>Enter your Longitude:</label>
-                    <input id="inLng" type="text" ref="lng" placeholder="longitude" required />
-                    <input type="submit" value="Find Pitches" />
-                </form>
-                <button id="getLocation" onClick={this.getLocation}>provide your location</button>
+            <div>
+                <div id="pitch-container">     
+                    <form id="search" onSubmit={this.getPitches}>
+                        <label>Enter your Latitude:</label>
+                        <input id="inLat" type="text" ref="lat" placeholder="latitude" required />
+                        <label>Enter your Longitude:</label>
+                        <input id="inLng" type="text" ref="lng" placeholder="longitude" required />
+                        <input type="submit" value="Find Pitches" />
+                    </form>
+                    <button id="getLocation" onClick={this.getLocation}>provide your location</button>
+               </div>
+               <div>
+                    <h1>add a pitch to our DB</h1> 
+                    <form class="addPitch" onSubmit={this.AddPitch}>
+                        <label>pitch</label>
+                        <input name="name" type="text" ref="name" placeholder="name" required />
+                        <label>phone</label>
+                        <input name="phone" type="text" ref="phone" placeholder="phone"/><br/>
+                        <label>Latitude:</label>
+                        <input name="inLat" type="text" ref="alat" placeholder="latitude" required />
+                        <label>Longitude:</label>
+                        <input name="inLng" type="text" ref="alng" placeholder="longitude" required />
+                        <input type="submit" value="Add Pitch" />
+                    </form>
+                </div>
                 <ul>{pitches}</ul>
-           </div>
+            </div>
         );
     },
-    handleSubmit: function(e){
+    getPitches: function(e){
         e.preventDefault();
         var lng = this.refs.lng.value;
         var lat = this.refs.lat.value;
@@ -47,6 +63,31 @@ var Pitches = React.createClass({
                 pitches: json
             });
             //console.log(json);
+        });
+    },
+
+
+
+    AddPitch: function(e){
+        e.preventDefault();
+        var coord = [this.refs.alng.value,this.refs.alat.value];
+        var name = this.refs.name.value;
+        var phone = this.refs.phone.value;
+        var data = {
+            name: name,
+            phone: phone,
+            geometry: {
+                type:"point",
+                coordinates:coord
+            }
+        }
+        console.log(data);
+        
+        $.ajax({
+            type: "POST",
+            url: "/api/pitches",
+            data: JSON.stringify(data),
+            contentType:"application/json"
         });
     },
 
